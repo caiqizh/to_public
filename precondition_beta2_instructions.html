@@ -1,0 +1,730 @@
+<HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
+    <HTMLContent><![CDATA[
+        <!-- YOUR HTML BEGINS -->
+        <!DOCTYPE html>
+        <html>
+        
+        <head>
+            <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+            <script type='text/javascript' src='https://s3.amazonaws.com/mturk-public/externalHIT_v1.js'></script>
+        </head>
+        <link type="text/css" href="https://getbootstrap.com/1.0.0/assets/css/bootstrap-1.0.0.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://creativecouple.github.io/jquery-timing/jquery-timing.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+        
+        <!-- ContextMenu -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+        
+        <!-- <script src="https://cdn.jsdelivr.net/gh/musclesoft/jquery-connections/jquery.connections.js"></script> -->
+        
+        <script src="https://cdn.jsdelivr.net/gh/ZHANG-CAIQI/js_utils/jquery.connections.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ZHANG-CAIQI/js_utils/PageManager.js"></script>
+
+
+        <!-- alertify -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/themes/default.css"> -->
+        
+        <style>
+
+            .hidden {
+                transition: opacity 1s ease-out;
+                opacity: 0;
+                height: 0;
+                overflow: hidden;
+            }
+                  
+            .example {
+                background-color: #efefef;
+                margin-left: 20px;
+                margin-right: 50px;
+                padding: 10px;
+                padding-bottom: 1px;
+            }
+        
+            .highlighted {
+                background-color: yellow;
+            }
+            .pre-highlighted {
+                background-color: rgb(192, 192, 186);
+            }
+        
+            .text-mouseover {
+                border-style: solid;
+            }
+        
+            /* Handle the question text-boxes */
+            .textblock {
+                border-radius: 5px;
+                background: #D0D0D0;
+                display: inline-block;
+                border: 2px solid Black;
+                padding: 5px 10px 5px 10px;
+                margin: 10px 10px 10px 10px;
+                z-index: 1;
+            }
+
+            .textblock-hidden {
+                display: none !important;
+            }
+
+        
+            .textblock_pool {
+                height: 200px;
+            }
+        
+            .textblock_span {
+                padding-right: 10px;
+            }
+        
+            .subset-test,
+            .test-vis {
+                background: #2198adb3;
+                background-color: #2198adb3;
+            }
+        
+            /* little x for deleting boxes */
+            .x {
+                position: absolute;
+                background: red;
+                color: white;
+                top: -10px;
+                right: -10px;
+            }
+
+            .x_static {
+                position: absolute;
+                background: red;
+                color: white;
+            }
+
+            /* handle line styles*/
+            .connection {
+                border: 10px double;
+                z-index: 0;
+                border-radius: 40px;
+                /*pointer-events:none;*/
+                color: rgb(200, 200, 200);
+                color: rgba(0, 0, 0, 0.7);
+            }
+            .connection:hover {
+                color: #55f;
+            }
+        
+            .annotation {
+                height: 50%;
+            }
+        
+            #submitButton {
+                z-index: 5;
+            }
+        
+            #feedback {
+                width: 100%;
+            }
+        
+            hr.hr-medium {
+                border: 3px solid black;
+            }
+        
+            body {
+                margin: 10px !important;
+            }
+
+            .actionable-mouseover {
+                background: #FFB9CF;
+            }
+
+            .precondition-mouseover {
+                background: #09EBDF;
+            }
+
+            .postcondition-mouseover {
+                background: #76FF84;
+            }
+
+            #moving_div {
+                position: fixed;       
+                width: 1px;
+                height: 1px;
+                z-index: -1;
+            }
+            .moving_line {
+                z-index: -1;
+            }
+            
+            .context-menu-active {
+                z-index: 1000
+            }
+            
+            .dropdown-menu {
+                position: absolute;
+                z-index: 100;
+            }
+
+            .arrow {
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                height: 20px;
+                width: 20px;
+                display: inline-block;
+                padding: 3px;
+                position: relative;
+              }
+  
+              .right {
+                transform: rotate(-45deg);
+                -webkit-transform: rotate(-45deg);
+              }
+  
+              .left {
+                transform: rotate(135deg);
+                -webkit-transform: rotate(135deg);
+              }
+  
+              .up {
+                transform: rotate(-135deg);
+                -webkit-transform: rotate(-135deg);
+              }
+  
+              .down {
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+              }
+  
+            
+
+        </style>
+        
+        <body>
+        
+            <form name='mturk_form' method='post' id='mturk_form' action='/mturk/externalSubmit'>
+                <input type='hidden' value='' name='assignmentId' id='assignmentId' />
+        
+                
+                <div class="table table-hover container">
+                    <div class="row instructions">
+                        <div class="col-12">
+                        <h5> <font color="#C70024">* Please Make Sure You Read ALL the Instructions Below Before Doing the HIT!</font> </h5>
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="hello_header">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#hello">
+                                                Hello, about us, and thank you for your help!
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="hello" class="collapse show" aria-labelledby="hello_header"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+                                            Hello! We are a research lab at <i>University of California, Los Angeles</i> trying to
+                                            build AI tools to <font color="#0000FF">infer the pre- and post-conditions of an action</font>.
+                                            <br><br>
+                                            We are calibrating our payment scheme <b>to meet a $15 per hour wage</b>.
+                                            <!-- <br><br> -->
+                                            If you perform well, we will invite you to participate in more well-paying trials in the near future.
+                                            <br><br>
+                                            <font color="#C70039">
+                                            Meanwhile, we reserve the rights to withhold the payments
+                                            <b>if spamming responses are spotted.</b>
+                                        	</font>
+                                            <br><br>
+                                            We understand the
+                                            pressures of Mechanical Turk, but we are a
+                                            small lab and cannot afford to throw out too much data.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" type="button"
+                                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                Introduction and Terminologies
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+                                            In the annotation panel below a step-by-step instruction manual for accomplishing a task is shown on the left.
+                                            <!-- The manual is segmented into a few steps. -->
+                                            <!-- , where a person can accomplish the desired task by carefully following each step description. -->
+                                            <br>
+                                            The goal of this task is to annotate the <b>pre- and post-conditions of certain actions of interest</b> in the manual.
+                                            <br>
+                                            We hereby define the essential terminologies:
+
+                                            <br><br>
+
+                                            <ul>
+                                                <li><b><u><span class="actionable-mouseover">Actionable</span></u></b>: a phrase of which <u>a person</u> can <b>really execute</b> or <b>take actions</b> <i>in the real world</i>. 
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Example Step</u>:</b> <span class="actionable-mouseover">Prepare the line</span>. The length and width of line you need varies based on your trimmer. If you <span class="actionable-mouseover">purchase the wrong width of line</span>, the trimmer will not work correctly, so don’t waste your money by simply guessing at the hardware store. If you are not sure what size line your trimmer uses, check online — the manufacturer’s website often has instructions, and if not the customer service department should be able to help you...
+                                                        </p>
+                                                    </div>
+
+                                                    <ul>
+                                                    <li>In this example, both <i>"Prepare the line"</i> and <i>"purchase the wrong width of line"</i> are valid actionables as you can really follow and <b>execute</b> them in the real world.</li>
+                                                    
+                                                    <li>In contrast, <i>"the manufacturer’s website often has instructions"</i> is <b>NOT</b> an actionable as a <u>person</u> is not the main actor (<u>website</u> is) to perform the <i><u>has</u></i> action.</li>
+                                                    
+                                                    <li>Note that we only show two actionables in this step for brevity.
+                                                    
+                                                    <li> You are required to find <b>ALL</b> the actionables of each step during the annotation.</li>
+                                                    
+                                                    <li><font color="#8B0000">Negation of an action</font> can be a valid actionable if the instruction texts mention its cause or outcomes, e.g. in a recipe <u>not heating the pan</u> or <u>fail to heat the pan</u> are valid actionables if the outcome <u>chicken will not be well-cooked</u> is mentioned.
+
+                                                    </ul>
+                                                    <br>
+
+                                                </li>
+                                                <li><b><u><span class="precondition-mouseover">Pre-condition</span></u></b>: The <b>prerequisites</b> to be met for an actionable to be executable, which can be a <u>status</u>, a <u>condition</u>, and/or another <u>prior actionable</u>.
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Example Step 1</u>:</b> Prepare the line. The length and width of line you need varies based on your trimmer. If you purchase the wrong width of line, the trimmer will not work correctly, so don’t waste your money by simply guessing at the hardware store. If you are <span class="precondition-mouseover">not sure what size line your trimmer uses</span>, <span class="actionable-mouseover">check online</span> — <span class="precondition-mouseover">the manufacturer’s website often has instructions</span>, and if not the customer service department should be able to help you...
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Example Step 2:</u></b> <span class="precondition-mouseover">Warm a pan with olive oil over medium heat.</span> 2 tbsp. of olive oil should be enough if it can thinly coat the bottom of the pan. 
+                                                            Wait until the <span class="precondition-mouseover">oil is sizzling</span>, which should take about 1-2 minutes.<span class="actionable-mouseover">Place the chicken in the pan.</span>
+                                                            The boiling oil will make the surface of the chicken legs golden and crispy. You can stop frying when the chicken is darkened.
+                                                        </p>
+                                                    </div>
+
+                                                    
+                                                    <ul>
+                                                    
+                                                        <li>The pre-condition can be describing a status, e.g. in Example 1, one needs to be <i>"not sure what size line your trimmer uses"</i> before taking the action <i>"check online"</i>, which also requires the <u>website to have the instructions ready</u> as a pre-condition. Also, in Example 2, one needs to wait until the <i>"oil is sizzling"</i> before frying the chicken, this phrase is another required pre-condition to the actionable <i>"Place the chicken in the pan"</i></li>
+                                                    
+                                                        <li>The pre-condition can be an actionable, e.g. in Example 2, prior to <i>"Place the chicken in the pan"</i>, one needs to first <i>"Warm a pan with olive oil over medium heat."</i>, and hence the latter is the pre-condition to the former. </li>
+
+                                                        <li>Please annotate <b>ALL the possible</b> pre-conditions to each valid actionable.</li>
+
+                                                    </ul>
+                                                
+                                                    <br>
+                                                
+                                                </li>
+                                                <li><b><u><span class="postcondition-mouseover">Post-condition</span></u></b>: The outcome (effect) caused by the execution of an actionable. 
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Example Step</u>:</b> Prepare the line. The length and width of line you need varies based on your trimmer. If you <span class="actionable-mouseover">purchase the wrong width of line</span>, <span class="postcondition-mouseover">the trimmer will not work correctly</span>, so don’t <span class="postcondition-mouseover">waste your money</span> by <span class="actionable-mouseover">simply guessing at the hardware store</span>. If you are not sure what size line your trimmer uses, check online — the manufacturer’s website often has instructions, and if not the customer service department should be able to help you...
+                                                        </p>
+                                                    </div>
+
+                                                    <ul>
+                                                    <li><i>"the trimmer will not work correctly"</i> is the result caused by the actionable <i>"purchase the wrong width of line"</i> and hence the former is the post-condition to the latter.</li>
+
+                                                    <li>In this example, <i>"simply guessing at the hardware store."</i> will lead to the result that you will <i>"waste your money"</i>, and hence the latter is the post-condition to the former.</li>
+
+                                                    
+
+                                                    <li> Note that a post-condition can possibly be regarded as the pre-condition for a <u>subsequent actionable</u>.</li>
+                                                    
+                                                    <li>Please again annotate <b>ALL the possible</b> post-conditions to each valid actionable.</li>
+                                                    </ul>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" type="button"
+                                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                Instructions and Annotation Flow
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                        data-parent="#accordion">
+
+                                        <div class="card-body">
+                                            <p><b>We have prepared a quick-start video to walk you through the essentials of this annotation task.<br>
+                                            <font color="#FF0000">Please watch the whole video carefully!! (click to enlarge)</font>
+                                            </b></p>
+
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/9ogS0uTMoG0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                                            <br>
+                                            <br>
+                                            <p><b>And a sample final status of what a good annotation should look like (click to enlarge):</b></p>
+                                            <a href="https://multimodal-sequencing-images-test-1.s3.us-west-1.amazonaws.com/images/Lawn+trimmer+example.png" target="_blank"> <img src="https://multimodal-sequencing-images-test-1.s3.us-west-1.amazonaws.com/images/Lawn+trimmer+example.png" alt="Example Annotation" height="300">
+                                            </a>
+                                            <hr>
+                                            <b>Below is the summarized step-by-step annotation flow to recap the quick-start video:</b>
+                                            <br>
+                                            <br>
+
+                                            As can be seen we have pre-highlighted a few statements in <span class = "pre-highlighted">grey</span>
+                                            where each of them is <b>clickable</b>.
+                                            <br>
+                                            These statements are automatically pre-selected using certain algorithms, which are supposed to
+                                            <br>
+                                            cover as much potential actionables and pre-/post-conditions as possible, but they may not be that accurate!
+                                            <br><br>
+                                            <h5>The annotation flow:</h5>
+                                            <ol>
+                                                <li><font color="#8B0000"><b>Annotate an Actionable:</b></font> Select a clickable <span class = "pre-highlighted">pre-highlighted</span> text segment if it is a  <u><b>valid actionable</b></u>. You can also <font color="#0000FF">actively highlight a text segment using the mouse cursor</font> should you feel the pre-highlighted texts are not accurate enough (e.g. containing redundant information).  
+                                                Once a text segment is clicked or highlighted, the color will change to <span class = "highlighted">yellow</span> and a corresponding text block will pop out on the right panel.
+                                                </li>
+                                                <ul>
+                                                    <li>You can click on the <font color="#FF0000">X</font> button on the text block if you wish to remove the clicked or highlighted texts.
+                                                    </li>
+                                                    <li>Please annotate actionable text blocks <b>even if no valid</b> pre- and post-conditions exist in the instruction text, simply leave these actionables unconnected.
+                                                    </li>
+                                                </ul>
+                                                <br>
+                                                <li><font color="#8B0000"><b>Annotate the Pre-conditions:</b></font> Click or highlight <b>ALL</b> the text segments that are suitable pre-conditions to the actionable found in (1). Then, on the right panel simply <b>right-click</b> <font color="#0000FF"><b>on a pre-condition text block</b></font> and start to drag an (directed) edge<font color="#0000FF"><b> to connect to the actionable text block</b></font>, and then release the drag.
+                                                </li>
+                                                <ul>
+                                                    <li>Note that a pre-condition of an actionable can be <u>another actionable</u> or <u>a statement describing a status </u> which needs to be met prior to executing the actionable.
+                                                    </li>
+                                                    <li>The <u>direction of the edge</u> implies the <font color=" #00C718">temporal order</font> of the events, i.e. event A &#10236; event B indicates that event A happens before event B.
+                                                    </li>
+                                                </ul>
+                                                <br>
+                                                <li><font color="#8B0000"><b>Label the Edge:</font></b> By right-clicking on the edge, please select from the drop-down menu the proper tag (pre-condition) to label the relations.
+                                                </li>
+                                                <br>
+                                                <li><font color="#8B0000"><b>Annotate the Post-conditions:</b></font> Similar to (2), find <b>ALL</b> suitable post-conditions to the actionable found in (1). Simply <b>right-click</b> <font color="#0000FF"><b>on the actionable text block</b></font> and start to drag an (directed) edge <font color="#0000FF"><b> to connect to the post-condition text block</b></font>.
+                                                </li>
+                                                <ul>
+                                                    <li>A post-condition of an actionable is usually a statement describing <u>a status which is caused after (by)</u> executing the actionable.
+                                                    </li>
+                                                </ul>
+                                                <br>
+                                                <li><font color="#8B0000"><b>Label the Edge:</font></b> Similar to (3), please select from the drop-down menu the proper tag (post-condition) to label the relations.
+                                                </li>
+                                                <br>
+                                                <li><font color="#8B0000"><b>Repeat from (1) to (5)</b></font> until you cannot find anymore valid relations to be annotated among your selected text blocks.
+                                                </li>
+                                            </ol>
+
+
+                                            <h5><font color="#006400">Notes:</font></h5>
+                                            <ul>
+                                                <font color="#006400">
+                                                <li>We highly recommend you to <b>read the entire manual at least once</b> before starting the annotation.
+                                                </li>
+
+                                                <li>Please annotate <b>ALL the valid actionables</b> regardless of whether their pre/post-conditions exist (in the text) or not. 
+                                                </li>
+                                                <ul>
+                                                    <li>For some status descriptions, however, they should only be annotated if they are the pre- or post-conditions of some actionables.
+                                                    </li>
+                                                </ul>
+                                                <li>
+                                                    When annotating actionables, do not feel hesitated to highlight <b>as much as possible</b> if all the presented information is essential and the segment is self-contained, e.g.
+                                                    <ul>
+                                                        <li>You should annotate <span class="actionable-mouseover">Look for a strong sponge that has a soft side and a abrasive side that won't scratch your bottle</span> rather than <span class="actionable-mouseover">Look for a strong sponge</span>.
+                                                        </li>
+                                                    </ul>
+                                                    
+                                                </li>
+                                                </font>
+                                            </ul>
+
+                                            <h5><font color="#8B0000">Warning:</font></h5>
+                                            <ul>
+                                                <font color="#8B0000">
+                                                    
+                                                <li>For this task, there are a few very obvious (golden) actionable-condition relations internally annotated, which would be used to verify your annotations.
+                                                </li>
+                                                
+                                                <li>We reserve the rights to withhold the payment if spamming responses (violating our golden annotations too much) are detected!
+                                                </li>
+                                                </font>
+                                            </ul>
+                                            <h5><b>Thank you, and hope you enjoy the task!</b></h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header" id="headingFour">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" type="button"
+                                                data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                FAQ (Optional but VERY HELPFUL)
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                        data-parent="#accordion">
+                                        <div class="card-body">
+                                            <h5>The FAQ is meant to clarify some potential uncertainties you may encounter when doing this task.</h5>
+                                            <h5>You do not need to read it fully now, but you may find it useful and come back to check the details after you start the task.</h5>
+
+                                            <hr>
+                                            <h5>We list a few cases one may feel unsure about with some examples and clarifications</h5>
+                                            <h5>Content:</h5>
+                                            <ol>
+                                                <li><b>Make sure</b> statement </li>
+                                                <li><b>If</b> statement</li>
+                                                <li>Negation</li>
+                                                <li>If A is the pre-condition of B, does that mean B is the post-condition of A?</li>
+                                                <li>Conjunctions: <b><i>before</i></b>, <b><i>after</i></b>, and <b><i>until</i></b></li>
+                                                <li>Passive actionable</li>
+                                                <li>When the title of the step and a step set forth after the title both <b>refer to the exact same action</b></li>
+                                            </ol>
+                                            <h5>Cases:</h5>
+                                            <ol>
+                                                <li><u><b>Make sure</b> statement:</u> The rule of thumb is, if the statement is determined to be a valid post-condition of an actionable, it should be labeled as a post-condition, otherwise, it should be an actionable, e.g.
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                            <ol>
+                                                                <li><span class="actionable-mouseover">Fry the chicken</span>, make sure <span class="postcondition-mouseover">it's cooked fully</span>.</li>
+                                                                <li><span class="precondition-mouseover">Make sure you have the wire</span>, and <span class="actionable-mouseover">connect the wire</span>.</li> 
+                                                                <li><span class="actionable-mouseover">Make sure to knock on the door first</span>, and enter.</li>
+                                                            </ol>
+                                                        </p>
+                                                    </div>
+                                                    <ul>
+                                                    <li>In the first example, <span class="postcondition-mouseover">it's cooked fully</span> is the post-condition of <span class="actionable-mouseover">Fry the chicken</span>.</li>
+                                                    <li>In the second example, <span class="precondition-mouseover">Make sure you have the wire</span> is the pre-condition of <span class="actionable-mouseover">connect the wire</span>.</li>
+                                                    <li>In the third one, <span class="actionable-mouseover">Make sure to knock on the door first</span> is just an actionable.</li>
+                                                    </ul>
+                                                    <br>
+                                                </li>
+
+                                                <li><u><b>If</b> statement:</u>
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                            <ol>
+                                                                <li>
+                                                                    If you <span class="actionable-mouseover">cook the chicken leg wrong</span>, you'll <span class="postcondition-mouseover">end up with something that is dry and rubbery</span>. 
+                                                                </li>
+                                                                <li>
+                                                                    If you are <span class="precondition-mouseover">not sure where to buy it</span>, you can <span class="actionable-mouseover">check it online</span>. 
+                                                                </li>
+                                                            </ol>
+                                                        </p>
+                                                    </div>
+
+                                                    <ul>
+                                                    <li>First, <span class="postcondition-mouseover">end up with something that is dry and rubbery</span> is the post-condition of <span class="actionable-mouseover">cook the chicken leg wrong</span>.</li>
+                                                    <li>Second, <span class="precondition-mouseover">not sure where to buy it</span> is the pre-conditon of <span class="actionable-mouseover">check it online</span>.</li>
+                                                
+                                                    </ul>
+                                                    <br>
+
+                                                </li>
+
+                                                <li><u>Negation:</u>
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                            <ol>
+                                                                <li>
+                                                                    Don't <span class="postcondition-mouseover">waste your money</span> by <span class="actionable-mouseover">simply guessing at the hardware store</span>. 
+                                                                </li>
+                                                                <li>
+                                                                    Avoid <span class="actionable-mouseover">cotton cloths and towels</span>, which could <span class="postcondition-mouseover">leave residue on your jewelry</span>.
+                                                                </li>
+                                                                <li>
+                                                                    If you're <span class="precondition-mouseover">lighting a fire indoors</span>, you probably <span class="actionable-mouseover">won't need to worry about the flame going out</span>.
+                                                                </li>
+
+                                                            </ol>
+                                                        </p>
+                                                    </div>
+
+                                                    <ul>
+                                                    <li>First, <span class="postcondition-mouseover">waste your money</span> is the post-condition of <span class="actionable-mouseover">simply guessing at the hardware store</span>.</li>
+                                                    <li><b>Sometimes, for negated action, you can annotate the phrase but ignore the verb/predicate if you find valid condition-actionable relation. </b>In the second example, you can ignore the verb "Avoid". The real actionable can be something like <span class="actionable-mouseover">use cotton cloths and towels</span> (but of course <u>use</u> does not exist in the sentence) which leads to post-condition <span class="postcondition-mouseover">leave residue on your jewelry</span>.</li>
+                                                    <li>Negation words and phrases can also be included in an actionable. For example, <span class="precondition-mouseover">lighting a fire indoors</span> means that you <span class="actionable-mouseover">won't need to worry about the flame going out</span>.</li>
+                                                        
+                                                    </ul>
+                                                    <br>
+
+                                                </li>
+
+                                                <li><u>A <b>post-condition</b> should refer to the <b>status</b> or the results after applying/executing an actionable, for example: </u>
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                    <ol>
+                                                        <li><span class="precondition-mouseover">Add the ramen.</span> </li>
+                                                        <li><span class="actionable-mouseover">Boil the noodles for 3 minutes.</span> </li>
+                                                    </ol>   
+
+                                                    <br>
+                                                    </div>
+
+                                                    <ul>
+                                                        <li>1 is 2's pre-condition indeed, but 2 is <b>NOT</b> 1's post-condition. A pre-condition enables an action being executable, but this action is not necessarily the <u>result</u> after applying the action.</li>
+                                                        <li>In this case, the real post-conditions of 1 should be, <i>"ramen in the water"</i>, or <i>"water covers ramen"</i>, and the post-condition for 2 can be <i>"ramen is softened"</i>, etc.</li>
+                                                    </ul>
+                                                    
+                                                    <br>
+
+                                                </li>
+
+                                                <li><u>Conjunctions: <b><i>before</i></b>, <b><i>after</i></b>, and <b><i>until:</i></b> </u> When you see conjunctions such as <b><i>before</i></b>, <b><i>after</i></b>, and <b><i>until</i></b>, it is very likely that there are some pre-/post-conditions. Some examples:
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                            <ol>
+                                                                <li>
+                                                                    <span class="actionable-mouseover">Soak the sponge in the solution</span> until <span class="postcondition-mouseover">it is drenched</span>.
+                                                                </li>
+                                                                <li>
+                                                                    <span class="precondition-mouseover">Dry the brush and holder</span> before <span class="actionable-mouseover">storing them</span>
+                                                                </li>
+                                                                <li>
+                                                                    After <span class="precondition-mouseover">washing the vegitables</span>, <span class="actionable-mouseover">put them in the pot</span>.
+                                                                </li>
+
+                                                            </ol>
+                                                        </p>
+                                                    </div>
+
+                                                    <ul>
+
+                                                    <li>"Do X <b><i>until</i></b> Y happens" implies that Y is the consequence of X, hence a post-condition. </li>
+                                                    
+                                                    <li>"Do X <b><i>before</i></b> doing Y can imply X is a pre-condition that needs to happen for Y to be executed. Although in this example you indeed need to dry the brush before you can store them, be aware that temporal order does not always imply pre-conditions unless the events are dependent. E.g. “cut carrots before cutting cucumber”, in reality, cutting cucumber does not really depend on if you cut the carrots or not.</li>
+                                                    
+                                                    <li>Similar to the <b><i>before</i></b> case, "<b><i>After</i></b> doing X, do Y" can imply X is a pre-condition to Y.</li>
+                                                                                                        
+                                                    </ul>
+                                                    <br>
+
+                                                </li>
+
+                                                <li><u>Passive actionables:</u> A phrase that describes scenarios that a person <b><i>passively receives</i></b> or <b><i>indirectly performs</i></b> an action can be considered as a valid actionable.
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                            <ol>
+                                                                <li>If <span class="precondition-mouseover">your application is approved</span>, <span class="actionable-mouseover">you'll get a letter in the mail</span>.</li>
+                                                            </ol>
+                                                        </p>
+                                                    </div>
+                                                    <ul>
+                                                    <li>In the first example, the phrase <span class="actionable-mouseover">you'll get a letter in the mail</span> at first glance is not an executable statement, however, someone else has to <u>send that letter</u> in order for a person to <u>get a letter</u>.</li>
+                                                    <li>Moreoever, we can clearly see a pre-condition relation as the <u>application being approved</u> is required for that letter to be sent.</li>
+                                                    <li>As this type of knowledge is useful and important as well, we ask you to annotate these relations if you recognize their presence in the instruction texts.</li>
+                                                    </ul>
+                                                    <br>
+                                                </li>
+
+                                                <li><u>When the title of the step and a step set forth after the title both <b>refer to the exact same action</b>. </u>  
+                                                    <br><br>
+                                                    <div class="example">
+                                                        <p>
+                                                            <b><u>Examples</u>:</b> 
+                                                            <ol>
+                                                                <li>
+                                                                    <b>Step 1</b>: Heat the butter until it melts. Place the bowl in the microwave. Heat the butter on high until it is all melted.
+                                                                </li>
+                                                                <li>
+                                                                    <b>Step 2</b>: Let the butter sit. Leave the butter alone in the microwave for 3 to 5 minutes.
+                                                                </li>
+                                                                <li>
+                                                                    <b>Step 3</b>: Use a spoon to skim off the top.
+                                                                </li>
+
+                                                            </ol>
+                                                        </p>
+                                                    </div>
+
+                                                    <ul>
+
+                                                    <li>This example can be a bit confusing because both <b>Step 1</b> and <b>Step 2</b> follow the structure of "title of a step" + "detailed steps referring to the same action". </li>
+                                                    <li>Let's first start with relations within <b>Step 1</b>, <span class="precondition-mouseover">Place the bowl in the microwave</span> must happen before <span class="actionable-mouseover">Heat the butter on high</span> so we can see a pre-condition relationship here.</li>
+                                                    <li>Between <b>Step 1</b> and <b>Step 2</b>, while <span class="precondition-mouseover">Heat the butter</span> is a pre-condition of <span class="actionable-mouseover">Let the butter sit</span>, <span class="precondition-mouseover">Heat the butter on high</span> refers to the same action so it can also be a precondition of <span class="actionable-mouseover">Let the butter sit</span>. </li>
+                                                    <li>Similarly, <span class="precondition-mouseover">Heat the butter on high</span> is the pre-condition of both <span class="actionable-mouseover">Let the butter sit</span> and <span class="actionable-mouseover">Leave the butter alone in the microwave for 3 to 5 minutes</span>.</li>
+                                                    <li>Lastly, between <b>Step 2</b> and <b>Step 3</b>, as <span class="precondition-mouseover">Leave the butter alone in the microwave for 3 to 5 minutes</span> is a detailed version of <span class="precondition-mouseover">Let the butter sit</span>, we can say that they describe the same action so they are all pre-conditions of <span class="actionable-mouseover">Use a spoon the skim off the top</span>.</li>
+                                                    <li>Please find as many relations as you can in an article.</li>
+
+                                                    </ul>
+                                                    <br>
+
+                                                </li>
+                                            </ol>    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                                           
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr class="hr-medium">
+                    <br>
+                    
+                    <h5> <font color="#C70024">* Please DO NOT refresh the page or press the go back button of your browser. Otherwise, some results may be lost!</font> </h5>
+
+                    <h4>Tips: </h4>
+                    <ul>
+                        <!-- <li>
+                            Task: (1) Select all the actionables first. (2) Pair the actionables with their pre- and post-conditions. (3)
+                            Hit submit!
+                        </li> -->
+                        <li>
+                            If you hover your mouse cursor on a connected edge, the text blocks will change colors to indicate their types for your references.
+                        </li>
+                        <li>
+                            Colors used to identify each type of the blocks: 
+                            <span class="precondition-mouseover">Pre-condition color</span>
+                            <span class="actionable-mouseover">Actionable color</span>
+                            <span class="postcondition-mouseover">Post-condition color</span>
+                        </li>
+                    </ul>
+                    Read above for detailed instructions and examples!
+
+                    <br><br>
+                    
+                <input type='hidden' value='' name='data' id='data' />
+                <div class="container">
+        
+                </div>
+            </form>
+        
+            <div id=moving_div></div> <!-- small div to track with the line. -->
+        
+            
+        </body>
+        
+        </html>
+
+        <!-- YOUR HTML ENDS -->    
+    ]]>
+    </HTMLContent>
+    <FrameHeight>1000</FrameHeight>
+</HTMLQuestion> 
